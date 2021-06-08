@@ -5,7 +5,6 @@ class Node:
         self.left = None
         self.right = None
         self.data = data
-
     # Insert method to create
     def insert(self, data):
 
@@ -44,69 +43,72 @@ class Node:
         if self.right:
             self.right.PrintTree()
 
-    #z.1 Найти высоту дерева
+    #z1
     def height(self):
         h_left = self.left.height() if self.left else 0
         h_right = self.right.height() if self.right else 0
-        return 1 + max(h_right, h_left)
-
-    #z.2 Кол-во элементов
-    def amount_data(self):
-        amount_left = self.left.amount_data() if self.left else 0
-        amount_right = self.right.amount_data() if self.right else 0
-        return  1 + amount_left + amount_right
-
-    # #z.3 Vtoroi maks # Не работает ((
-    # def second_max(self):
-    #     print(1)
-    #     print(self.data)
-    #     if self.right is None and self.left:
-    #         return self.left
-    #     elif self.right.right is None and self.right.left is None:
-    #         return self.data
-    #     else:
-    #         self.right.second_max()
+        return 1 + max(h_left, h_right)
 
 
-    #z.4 Obxod dereva
+    #z2
+    def amount(self):
+        h_left = self.left.amount() if self.left else 0
+        h_right = self.right.amount() if self.right else 0
+        return 1 + h_left + h_right
+
+    #z3-1
+    def maks(self):
+        if self.right is None:
+            return self.data
+        else:
+
+            return self.right.maks()
+
+    #z4
     def obxod(self):
-        if self.left is not None:
+        if self.left:
             self.left.obxod()
             print(self.data)
-            if self.right is not None:
+            if self.right:
                 self.right.obxod()
+        elif self.right:
+            print(self.data)
+            self.right.obxod()
         else:
             print(self.data)
-    #z.5 Print leaf
+
+    #z5
     def leaf(self):
-        if self.left is not None:
+        if self.left:
             self.left.leaf()
-            if self.right is not None:
+            if self.right:
                 self.right.leaf()
-        elif self.left is None and self.right is None:
+        elif self.right:
+            self.right.leaf()
+        else:
             print(self.data)
 
-    #z.6 Print razvilok
-
+    #z6
     def razvilki(self):
-        if self.left is not None:
+        if self.left:
             self.left.razvilki()
-            if self.left and self.right:
+            if self.right:
                 print(self.data)
                 self.right.razvilki()
-        elif self.right is not None:
+        elif self.right:
             self.right.razvilki()
 
-    #z.7  Poisk vetok
+    #z7
     def vetki(self):
-        if self.left is not None:
+        if self.left:
             self.left.vetki()
-            if self.left and self.right is None:
+            if self.right is None:
                 print(self.data)
             else:
                 self.right.vetki()
         elif self.right:
             print(self.data)
+
 
 
 
@@ -119,27 +121,17 @@ for i in range(len(stroka)):
     else:
         root.insert(stroka[i])
 
-# ZADANIE 3. VTOROI MAKSIMYM
-# stroitsya na poiske maksimyma.
-
-def maksimum(root):
-    if root.right is None:
-        return root.data
-    else:
-        return maksimum(root.right)
-maks = maksimum(root)
+maks = root.maks()
 maks_2 = 0
 def vtoroi_maks(root):
     global maks, maks_2
-    if root.data > maks:
-        maks_2, maks = maks, root.data
-    elif root.data > maks_2 and root.data != maks:
+    if root.data > maks_2 and root.data != maks:
         maks_2 = root.data
-
-    if root.right is not None:
-        return vtoroi_maks(root.right)
-    elif root.left is not None:
+    if root.right:
+        return  vtoroi_maks(root.right)
+    elif root.left:
         return vtoroi_maks(root.left)
-#
-# vtoroi_maks(root)
-# print(maks_2)
+
+
+# root.obxod()
+root.vetki()
