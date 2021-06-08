@@ -1,0 +1,145 @@
+class Node:
+
+    def __init__(self, data):
+
+        self.left = None
+        self.right = None
+        self.data = data
+
+    # Insert method to create
+    def insert(self, data):
+
+        if self.data:
+            if data < self.data:
+                if self.left is None:
+                    self.left = Node(data)
+                else:
+                    self.left.insert(data)
+            elif data > self.data:
+                if self.right is None:
+                    self.right = Node(data)
+                else:
+                    self.right.insert(data)
+        else:
+            self.data = data
+
+    # findval method to compare the value with nodes
+    def findval(self, lkpval):
+        if lkpval < self.data:
+            if self.left is None:
+                return str(lkpval) + " Not Found"
+            return self.left.findval(lkpval)
+        elif lkpval > self.data:
+            if self.right is None:
+                return str(lkpval) + " Not Found"
+            return self.right.findval(lkpval)
+        else:
+            return str(self.data) + ' is found'
+
+    # Print the tree
+    def PrintTree(self):
+        if self.left:
+            self.left.PrintTree()
+        print(self.data),
+        if self.right:
+            self.right.PrintTree()
+
+    #z.1 Найти высоту дерева
+    def height(self):
+        h_left = self.left.height() if self.left else 0
+        h_right = self.right.height() if self.right else 0
+        return 1 + max(h_right, h_left)
+
+    #z.2 Кол-во элементов
+    def amount_data(self):
+        amount_left = self.left.amount_data() if self.left else 0
+        amount_right = self.right.amount_data() if self.right else 0
+        return  1 + amount_left + amount_right
+
+    # #z.3 Vtoroi maks # Не работает ((
+    # def second_max(self):
+    #     print(1)
+    #     print(self.data)
+    #     if self.right is None and self.left:
+    #         return self.left
+    #     elif self.right.right is None and self.right.left is None:
+    #         return self.data
+    #     else:
+    #         self.right.second_max()
+
+
+    #z.4 Obxod dereva
+    def obxod(self):
+        if self.left is not None:
+            self.left.obxod()
+            print(self.data)
+            if self.right is not None:
+                self.right.obxod()
+        else:
+            print(self.data)
+    #z.5 Print leaf
+    def leaf(self):
+        if self.left is not None:
+            self.left.leaf()
+            if self.right is not None:
+                self.right.leaf()
+        elif self.left is None and self.right is None:
+            print(self.data)
+
+    #z.6 Print razvilok
+
+    def razvilki(self):
+        if self.left is not None:
+            self.left.razvilki()
+            if self.left and self.right:
+                print(self.data)
+                self.right.razvilki()
+        elif self.right is not None:
+            self.right.razvilki()
+
+    #z.7  Poisk vetok
+    def vetki(self):
+        if self.left is not None:
+            self.left.vetki()
+            if self.left and self.right is None:
+                print(self.data)
+            else:
+                self.right.vetki()
+        elif self.right:
+            print(self.data)
+
+
+
+
+stroka = list(map(int, input().split()))
+stroka.pop()
+for i in range(len(stroka)):
+    if i == 0:
+        root = Node(stroka[0])
+    else:
+        root.insert(stroka[i])
+
+# ZADANIE 3. VTOROI MAKSIMYM
+# stroitsya na poiske maksimyma.
+
+def maksimum(root):
+    if root.right is None:
+        return root.data
+    else:
+        return maksimum(root.right)
+maks = maksimum(root)
+maks_2 = 0
+def vtoroi_maks(root):
+    global maks, maks_2
+    if root.data > maks:
+        maks_2, maks = maks, root.data
+    elif root.data > maks_2 and root.data != maks:
+        maks_2 = root.data
+
+    if root.right is not None:
+        return vtoroi_maks(root.right)
+    elif root.left is not None:
+        return vtoroi_maks(root.left)
+#
+# vtoroi_maks(root)
+# print(maks_2)
