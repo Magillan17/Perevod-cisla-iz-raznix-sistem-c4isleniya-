@@ -2,13 +2,13 @@ N, S, F = map(int, input().split())
 S -= 1
 F -= 1
 
-# '''Cловарь '''
+'''Cловарь '''
 # def add_edge(G, v_s,v_f, _weight):
 #     if v_s not in G:
 #         G[v_s] = {}
 #     G[v_s][v_f] = weight
-#
-#
+# 
+# 
 # for v_s in range(N):
 #     spisok = list(map(int, input().split()))
 #     for v_f in range(len(spisok)):
@@ -16,6 +16,21 @@ F -= 1
 #             continue
 #         weight = spisok[v_f]
 #         add_edge(G,v_s,v_f, weight)
+# from collections import  deque
+# 
+# def dekstra(G, start):
+#     Q = deque()
+#     s = {}
+#     s[start] = 0
+#     Q.append(start)
+#     while Q:
+#         v = Q.popleft()
+#         for u in G[v]:
+#             if u not in s or s[v] + G[v][u] < s[u]:
+#                 s[u] = s[v] + G[v][u]
+#                 Q.append(u)
+# 
+#     return s
 
 '''Матрицы смежности'''
 matrix_vz = [[0]] * N
@@ -65,3 +80,15 @@ def doroga(G, start, end, S):
     return Q
 
 print(doroga(matrix_vz, S, F, dekstra(matrix_vz,S)))
+
+# print(displayShortestPath(matrix_vz, S, F, dekstra(matrix_vz, S)))
+
+
+
+
+
+
+
+
+
+
